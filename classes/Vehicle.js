@@ -1,9 +1,11 @@
+const memoryjs = require('memoryjs');
+
 class Vehicle {
     constructor(base) {
         Object.entries(base).forEach(([key, value]) => this[key] = value)
     }
 
-    getVehicleHealth() {
+    getHealth() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -13,7 +15,7 @@ class Vehicle {
         return memoryjs.readMemory(this.hProcess.handle, dwAddr + this.ADDR_VEHICLE_HPOFF, "float");
     }
 
-    getVehicleType() {
+    getType() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -23,7 +25,7 @@ class Vehicle {
         const cVal = memoryjs.readMemory(this.hProcess.handle, dwAddr + this.ADDR_VEHICLE_TYPE, "char");
 
         if(!cVal || cVal == 9) {
-            const mid = this.getVehicleModelId();
+            const mid = this.getModelId();
 
             return this[!cVal ? "oAirplaneModels" : "oBikeModels"].indexOf(mid) != -1 
                 ? (!cVal ? 5 : 6)
@@ -37,7 +39,7 @@ class Vehicle {
         return 0;
     }
 
-    getVehicleModelId() {
+    getModelId() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -47,13 +49,13 @@ class Vehicle {
         return memoryjs.readMemory(this.hProcess.handle, dwAddr + this.ADDR_VEHICLE_MODEL, "short");
     }
 
-    getVehicleModelName() {
-        const vehicleId = this.getVehicleModelId();
+    getModelName() {
+        const vehicleId = this.getModelId();
 
         return this.ovehicleNames[vehicleId - 399] || "";
     }
 
-    getVehicleLightState() {
+    getLightState() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -63,7 +65,7 @@ class Vehicle {
         return memoryjs.readMemory(this.hProcess.handle, dwAddr + this.ADDR_VEHICLE_LIGHTSTATE, "byte") > 0;
     }
 
-    getVehicleEngineState() {
+    getEngineState() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -75,7 +77,7 @@ class Vehicle {
         return (cVal == 24 || cVal == 56 || cVal == 88 || cVal == 120);
     }
 
-    getVehicleSirenState() {
+    getSirenState() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -87,7 +89,7 @@ class Vehicle {
         return cVal == 48;
     }
 
-    getVehicleLockState() {
+    getLockState() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -99,7 +101,7 @@ class Vehicle {
         return dwVal == 2;
     }
 
-    getVehicleColor1() {
+    getColor1() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -109,7 +111,7 @@ class Vehicle {
         return memoryjs.readMemory(this.hProcess.handle, dwAddr + 1076, "byte");
     }
 
-    getVehicleColor2() {
+    getColor2() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -119,7 +121,7 @@ class Vehicle {
         return memoryjs.readMemory(this.hProcess.handle, dwAddr + 1077, "byte");
     }
 
-    getVehicleSpeed() {
+    getSpeed() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {

@@ -1,83 +1,85 @@
+const memoryjs = require('memoryjs');
+
 class Player {
     constructor(base) {
         Object.entries(base).forEach(([key, value]) => this[key] = value)
     }
 
-    getPlayerHealth() {
+    getHealth() {
         const cPed = memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_PTR, "dword");
 
         return memoryjs.readMemory(this.hProcess.handle, cPed + this.ADDR_CPED_HPOFF, "float");
     }
 
-    getPlayerArmor() {
+    getArmor() {
         const cPed = memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_PTR, "dword");
 
         return memoryjs.readMemory(this.hProcess.handle, cPed + this.ADDR_CPED_ARMOROFF, "float");
     }
 
-    getPlayerInteriorId() {
+    getInteriorId() {
         return memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_INTID, "Int");
     }
 
-    getPlayerSkinID() {
+    getSkinID() {
         const cPed = memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_PTR, "dword");
 
         return memoryjs.readMemory(this.hProcess.handle, cPed + this.ADDR_CPED_SKINIDOFF, "byte");
     }
 
-    getPlayerMoney() {
+    getMoney() {
         return memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_MONEY, "int");
     }
 
-    getPlayerWanteds() {
+    getWanteds() {
         return memoryjs.readMemory(this.hProcess.handle, 0x58DB60, "byte");
     }
 
-    getPlayerWeaponId() {
+    getWeaponId() {
         return memoryjs.readMemory(this.hProcess.handle, 0xBAA410, "byte");
     }
 
-    getPlayerWeaponName() {
-        const weaponId = this.getPlayerWeaponId();
+    getWeaponName() {
+        const weaponId = this.getWeaponId();
 
         return oweaponNames[weaponId + 1] || "";
     }
 
-    getPlayerState() {
+    getState() {
         const cPed = memoryjs.readMemory(this.hProcess.handle, this.ADDR_CPED_PTR, "dword");
 
         return memoryjs.readMemory(this.hProcess.handle, cPed + 0x530, "dword");
     }
 
-    IsPlayerInMenu() {
+    IsInMenu() {
         return memoryjs.readMemory(this.hProcess.handle, 0xBA67A4, "byte");
     }
 
-    getPlayerMapPosX() {
+    getMapPosX() {
         return memoryjs.readMemory(this.hProcess.handle, 0xBA67B8, "float");
     }
 
-    getPlayerMapPosY() {
+    getMapPosY() {
         return memoryjs.readMemory(this.hProcess.handle, 0xBA67BC, "float");
     }
 
-    getPlayerMapZoom() {
+    getMapZoom() {
         return memoryjs.readMemory(this.hProcess.handle, 0xBA67AC, "float");
     }
 
-    IsPlayerFreezed() {
+    IsFreezed() {
         return memoryjs.readMemory(this.hProcess.handle, this.hProcess.modBaseAddr + 0x690495, "byte");
     }
 
-    isPlayerInAnyVehicle() {
+    isInAnyVehicle() {
         return memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR5, "dword") > 0;
     }
 
-    isPlayerDriver() {
+    isDriver() {
         return memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
     }
 
-    isPlayerDriver() {
+    isDriver() {
         const dwAddr = memoryjs.readMemory(this.hProcess.handle, this.ADDR_VEHICLE_PTR, "dword");
 
         if(!dwAddr) {
@@ -92,16 +94,16 @@ class Player {
 
     // 
 
-    getPlayerRadiostationID() {
-        if(this.isPlayerInAnyVehicle() == 0) {
+    getRadiostationID() {
+        if(this.isInAnyVehicle() == 0) {
             return -1;
         }
 
         return memoryjs.readMemory(this.hProcess.handle, this.hProcess.modBaseAddr + 0x4CB7E1, "byte");
     }
 
-    getPlayerRadiostationName() {
-        const rId = this.getPlayerRadiostationID();
+    getRadiostationName() {
+        const rId = this.getRadiostationID();
 
         return this.oradiostationNames[rId] || "";
     }
@@ -115,6 +117,11 @@ class Player {
         }
 
         return memoryjs.readMemory(this.hProcess.handle, dwAddress + 0x79C, "dword");
+    }
+
+    //
+    getUserName() {
+        return memoryjs.readMemory(this.hProcess.handle, this.hModule.modBaseAddr + this.ADDR_SAMP_USERNAME, "str");
     }
 }
 

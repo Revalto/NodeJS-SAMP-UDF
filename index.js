@@ -1,5 +1,8 @@
 const memoryjs = require('memoryjs');
+const EventEmitter = require('events');
 const os = require("os");
+
+// Base
 const base = require('./configs/037R1.json');
 
 // Classes
@@ -21,7 +24,8 @@ module.exports = class UDF {
             this.hProcess = memoryjs.openProcess(this.processName); // hGta
             this.hModule = memoryjs.findModule("samp.dll", this.hProcess.th32ProcessID); // dwSamp
             this.logger = logger;
-
+            
+            this.updates = new EventEmitter();
             this.Player = new Player(this);
             this.Vehicle = new Vehicle(this);
             this.Weather = new Weather(this);
