@@ -7,14 +7,14 @@ class Chat {
     }
 
     startPolling() {
-        fs.watchFile(chatLogDir, { interval: 100 }, () => {
-            const data = fs.readFileSync(chatLogDir, 'utf-8');
+        fs.watchFile(this.chatLogDir, { interval: 100 }, () => {
+            const data = fs.readFileSync(this.chatLogDir, 'utf-8');
             const str = data
                 .split('\r\r\n')
                 .splice(-2, 1)
         
             this.updates.emit('message_new', str[0]);
-        })
+        });
     }
 
     IsSAMPAvailable() {

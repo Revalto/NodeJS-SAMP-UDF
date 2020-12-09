@@ -63,9 +63,9 @@ class Dialog {
         const dwPointer = this.getDialogStructPtr();
         const dwTextPointer = memoryjs.readMemory(this.hProcess.handle, dwPointer + this.SAMP_DIALOG_PTR1_OFFSET, "dword");
         const dwLinePointer = memoryjs.readMemory(this.hProcess.handle, dwTextPointer + this.SAMP_DIALOG_LINES_OFFSET, "dword");
-        const dwLinePointer = memoryjs.readMemory(this.hProcess.handle, dwLinePointer + (index - 1) * 0x4, "dword");
+        const dwLinesPointer = memoryjs.readMemory(this.hProcess.handle, dwLinePointer + (index - 1) * 0x4, "dword");
     
-        return memoryjs.readMemory(this.hProcess.handle, dwLinePointer, "str");
+        return memoryjs.readMemory(this.hProcess.handle, dwLinesPointer, "str");
     }
 }
 

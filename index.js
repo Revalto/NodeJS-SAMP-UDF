@@ -11,6 +11,7 @@ const Vehicle = require('./classes/Vehicle');
 const Weather = require('./classes/Weather');
 const Chat = require('./classes/Chat');
 const Server = require('./classes/Server');
+const Dialog = require('./classes/Dialog');
 
 module.exports = class UDF {
     constructor(logger = null) {
@@ -31,6 +32,7 @@ module.exports = class UDF {
             this.Weather = new Weather(this);
             this.Chat = new Chat(this);
             this.Server = new Server(this);
+            this.Dialog = new Dialog(this);
 
             if(this.logger) {
                 this.logger(`[ NodeJS-SAMP-UDF ] Loaded!`)
