@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-samp-udf",
+  "version": "1.0.0",
+  "description": "NodeJS-SAMP-AHK",
+  "main": "index.js",
+  "dependencies": {
+    "memoryjs": "^3.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Revalto/NodeJS-SAMP-UDF.git"
+  },
+  "keywords": [
+    "samp",
+    "nodejs",
+    "udf",
+    "blasthk"
+  ],
+  "author": "Revalto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Revalto/NodeJS-SAMP-UDF/issues"
+  },
+  "homepage": "https://github.com/Revalto/NodeJS-SAMP-UDF#readme"
+}
